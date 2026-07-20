@@ -67,7 +67,7 @@ const AppointmentManagement = () => {
   const approveAppointment = (id) => {
     setAppointments(
       appointments.map((item) =>
-        item.id === id ? { ...item, status: "Approved" } : item
+        item.id === id? {...item, status: "Approved" } : item
       )
     );
   };
@@ -76,7 +76,7 @@ const AppointmentManagement = () => {
   const cancelAppointment = (id) => {
     setAppointments(
       appointments.map((item) =>
-        item.id === id ? { ...item, status: "Cancelled" } : item
+        item.id === id? {...item, status: "Cancelled" } : item
       )
     );
   };
@@ -87,16 +87,7 @@ const AppointmentManagement = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Page Heading */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Appointment Management
-        </h1>
-        <p className="text-gray-500 mt-1">
-          View and manage all patient appointments
-        </p>
-      </div>
+    <div className="p-3 sm:p-4 md:p-6 bg-gray-100 min-h-screen"> {/* Mobile pe padding kam */}
 
       {/* Search Box */}
       <div className="bg-white p-4 rounded-xl shadow mb-6">
@@ -112,18 +103,18 @@ const AppointmentManagement = () => {
         </div>
       </div>
 
-      {/* Appointment Table */}
+      {/* Appointment Table - overflow-x-auto lagaya taake mobile me scroll ho */}
       <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="w-full table-fixed">
+        <table className="w-full min-w-[700px]"> {/* table-fixed hataya, min-w di */}
           {/* Table Header */}
           <thead className="bg-gray-800 text-white">
             <tr>
-              <th className="p-4 text-left w-[18%]">Patient</th>
-              <th className="p-4 text-left w-[18%]">Doctor</th>
-              <th className="p-4 text-left w-[15%]">Date</th>
-              <th className="p-4 text-left w-[12%]">Time</th>
-              <th className="p-4 text-left w-[15%]">Status</th>
-              <th className="p-4 text-left w-[22%]">Action</th>
+              <th className="p-4 text-left whitespace-nowrap">Patient</th>
+              <th className="p-4 text-left whitespace-nowrap hidden sm:table-cell">Doctor</th> {/* Tablet+ pe dikhega */}
+              <th className="p-4 text-left whitespace-nowrap hidden md:table-cell">Date</th> {/* Laptop+ pe dikhega */}
+              <th className="p-4 text-left whitespace-nowrap">Time</th>
+              <th className="p-4 text-left whitespace-nowrap">Status</th>
+              <th className="p-4 text-left whitespace-nowrap">Action</th>
             </tr>
           </thead>
 
@@ -139,16 +130,16 @@ const AppointmentManagement = () => {
                   </div>
                 </td>
 
-                {/* Doctor Name */}
-                <td className="p-4 whitespace-nowrap">
+                {/* Doctor Name - Tablet+ */}
+                <td className="p-4 whitespace-nowrap hidden sm:table-cell">
                   <div className="flex items-center gap-2">
                     <Stethoscope size={18} className="text-gray-500" />
                     <span>{appointment.doctor}</span>
                   </div>
                 </td>
 
-                {/* Appointment Date */}
-                <td className="p-4 whitespace-nowrap">
+                {/* Appointment Date - Laptop+ */}
+                <td className="p-4 whitespace-nowrap hidden md:table-cell">
                   <div className="flex items-center gap-2">
                     <Calendar size={16} />
                     {appointment.date}
@@ -164,7 +155,7 @@ const AppointmentManagement = () => {
                 </td>
 
                 {/* Status */}
-                <td className="p-4">
+                <td className="p-4 whitespace-nowrap">
                   {appointment.status === "Approved" && (
                     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
                       Approved
@@ -183,7 +174,7 @@ const AppointmentManagement = () => {
                 </td>
 
                 {/* Action Buttons */}
-                <td className="p-4">
+                <td className="p-4 whitespace-nowrap">
                   <div className="flex gap-2">
                     <button
                       onClick={() => approveAppointment(appointment.id)}
@@ -206,6 +197,12 @@ const AppointmentManagement = () => {
           </tbody>
         </table>
       </div>
+
+      {filteredAppointments.length === 0 && (
+        <div className="text-center py-10 text-gray-500 bg-white rounded-xl shadow mt-4">
+          No appointments found
+        </div>
+      )}
     </div>
   );
 };
