@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-
-// Add Review Form Component
-// Props:
-// onAddReview -> Function received from parent component
-// It is used to add a new review to the reviews list.
 const AddReview = ({ onAddReview }) => {
-  // State to store form input values
   const [formData, setFormData] = useState({
     name: "",
     role: "",
@@ -60,18 +54,16 @@ const AddReview = ({ onAddReview }) => {
     // Stop submission if validation fails
     if (!validate()) return;
 
-    // Create new review object
     const newReview = {
-      id: Date.now(), // Unique ID
+      id: Date.now(),
       name: formData.name,
-      role: formData.role || "Patient", // Default role if empty
+      role: formData.role || "Patient",
       rating: formData.rating,
       message: formData.message,
-      date: new Date().toLocaleDateString(), // Current date
-    };
+     };
 
-    // Send review to parent component
     onAddReview(newReview);
+      alert("Review submitted successfully!");
 
     // Reset form after successful submission
     setFormData({
@@ -85,7 +77,7 @@ const AddReview = ({ onAddReview }) => {
     setErrors({});
   };
 
-  return (
+   return (
     // Review Form Container
     <div className="bg-card rounded-2xl shadow-md p-7">
       {/* Section Heading */}
@@ -192,5 +184,4 @@ const AddReview = ({ onAddReview }) => {
     </div>
   );
 };
-
 export default AddReview;
